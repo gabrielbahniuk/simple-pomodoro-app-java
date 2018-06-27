@@ -9,6 +9,7 @@
 
 ### Future implements
 
+- Custom times added by the user.
 - Button Stop.
 - Export how many "Pomodoros" did you do to a simple txt file.
 - Desktop notification (tray) when you're done.
