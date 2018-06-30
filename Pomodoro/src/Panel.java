@@ -6,22 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
-
+	
 	private static final long serialVersionUID = 1L;
-	final DateFormat sdf = new SimpleDateFormat("mm:ss");
 	private JLabel lblSelectTime;
 	private JLabel lblTempoRestante;
 	private JButton btnStartCount;
@@ -58,40 +50,15 @@ public class Panel extends JPanel {
 	cons.ipady = 10;
 	cons.gridx = 1;
 	cons.gridy = 3;
-	lblTempoRestante = new JLabel("--.--");
+	lblTempoRestante = new JLabel("25:00");
 	lblTempoRestante.setFont(new Font("Arial", Font.BOLD , 15));
 	panel.add(lblTempoRestante, cons);
 	
 	btnStartCount.addActionListener(new ActionListener() {	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-		Calendar now = Calendar.getInstance();
-		Calendar future = Calendar.getInstance();
-		JOptionPane.showMessageDialog(panel, "Minimize me and enjoy your time left!", "Pomodoro App", JOptionPane.INFORMATION_MESSAGE);
-		future.add(Calendar.MINUTE, Integer.parseInt((String) comboTimes.getSelectedItem()));
-			Timer t = new Timer();
-			 TimerTask task = new TimerTask(){
-			        public void run(){
-			        	future.add(Calendar.SECOND, -1);
-			        	Calendar c = Calendar.getInstance();
-			        	c.setTimeInMillis(future.getTimeInMillis() - now.getTimeInMillis());
-			        	if (c.getTimeInMillis() >= 0)
-			        		lblTempoRestante.setText("" + sdf.format(c.getTime()));
-			        	else {
-			        		JOptionPane.showMessageDialog(panel, "Congratulations! You've finished!", "Pomodoro App", JOptionPane.INFORMATION_MESSAGE);
-			        		t.cancel();			        		
-			        		comboTimes.setEnabled(true);
-			        		btnStartCount.setEnabled(true);
-			        	}			        	
-			        }
-			        
-			    };
-			 t.scheduleAtFixedRate(task, 0, 1000);
-			 comboTimes.setEnabled(false);
-			 btnStartCount.setEnabled(false);
-		}
-		
+			TimerHandler.setTimer(lblTempoRestante, comboTimes);
+		}		
 	});
 	
 	comboTimes.addItemListener(new ItemListener() {		
@@ -101,15 +68,7 @@ public class Panel extends JPanel {
 				lblTempoRestante.setText(e.getItem().toString() + ":00");
 		}
 	});
-	
 	lblSelectTime.setFont(new Font("Cambria", Font.PLAIN, 15));
-	
 	add(panel);		
-		
 	}
-	
-	
-	
-	
-	
 }

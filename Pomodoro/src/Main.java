@@ -12,7 +12,7 @@ public class Main {
 		        }
 		    }
 		} catch (Exception e) {
-		    e.printStackTrace();;
+		    e.printStackTrace();
 		}
 		new Frame();
 	}
